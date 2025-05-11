@@ -1,0 +1,18 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local localPlayer = Players.LocalPlayer
+
+-- RemoteEvent という名前の RemoteEvent を探す
+local killEvent = ReplicatedStorage:FindFirstChild("RemoteEvent")
+
+-- RemoteEvent が存在し、正しい型か確認
+if killEvent and killEvent:IsA("RemoteEvent") then
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= localPlayer then
+            -- 仮定：RemoteEvent はプレイヤー名を引数にしてKillを実行
+            killEvent:FireServer(player.Name)
+        end
+    end
+else
+    warn("RemoteEvent が見つからないか、RemoteEvent ではありません。")
+end
